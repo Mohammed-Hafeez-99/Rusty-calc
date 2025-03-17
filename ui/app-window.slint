@@ -1,6 +1,174 @@
+import { Button } from "std-widgets.slint";
+
 export component MainWindow inherits Window {
-    Text {
-        text: "hello world";
-        color: green;
+    title: "Calculator";
+    width: 240px;
+    height: 320px;
+    
+    // Mark properties as in-out to make them accessible from Rust
+    in-out property <string> display: "0";
+    in-out property <string> current-operation: "";
+    in-out property <float> stored-value: 0;
+    in-out property <bool> start-new-input: true;
+    callback button-clicked(string);
+    callback clear-clicked();
+    callback operation-clicked(string);
+    callback equals-clicked();
+    VerticalLayout {
+        padding: 10px;
+        spacing: 10px;
+        Rectangle {
+            height: 60px;
+            border-radius: 4px;
+            border-width: 1px;
+            border-color: #ccc;
+            background: #f8f8f8;
+            Text {
+                x: parent.width - self.width - 12px;
+                y: parent.height / 2 - self.height / 2;
+                text: root.display;
+                font-size: 24px;
+                horizontal-alignment: right;
+                overflow: elide;
+            }
+        }
+
+        // Use grid layout with rows
+        GridLayout {
+            spacing: 8px;
+            Row {
+                Button {
+                    text: "7";
+                    clicked => {
+                        root.button-clicked("7")
+                    }
+                }
+
+                Button {
+                    text: "8";
+                    clicked => {
+                        root.button-clicked("8")
+                    }
+                }
+
+                Button {
+                    text: "9";
+                    clicked => {
+                        root.button-clicked("9")
+                    }
+                }
+
+                Button {
+                    text: "÷";
+                    clicked => {
+                        root.operation-clicked("/")
+                    }
+               }
+            }
+
+            Row {
+                Button {
+                    text: "4";
+                    clicked => {
+                        root.button-clicked("4")
+                    }
+                }
+
+                Button {
+                    text: "5";
+                    clicked => {
+                        root.button-clicked("5")
+                    }
+                }
+
+                Button {
+                    text: "6";
+                    clicked => {
+                        root.button-clicked("6")
+                    }
+                }
+
+                Button {
+                    text: "×";
+                    clicked => {
+                        root.operation-clicked("*")
+                    }
+               }
+            }
+
+            Row {
+                Button {
+                    text: "1";
+                    clicked => {
+                        root.button-clicked("1")
+                    }
+                }
+
+                Button {
+                    text: "2";
+                    clicked => {
+                        root.button-clicked("2")
+                    }
+                }
+
+                Button {
+                    text: "3";
+                    clicked => {
+                        root.button-clicked("3")
+                    }
+                }
+
+                Button {
+                    text: "−";
+                    clicked => {
+                        root.operation-clicked("-")
+                    }
+               
+            }
+
+            Row {
+                Button {
+                    text: "0";
+                    clicked => {
+                        root.button-clicked("0")
+                    }
+                }
+
+                Button {
+                    text: ".";
+                    clicked => {
+                        root.button-clicked(".")
+                    }
+                }
+
+                Button {
+                    text: "=";
+                    clicked => {
+                        root.equals-clicked()
+                    }
+                }
+
+                Button {
+                    text: "+";
+                    clicked => {
+                        root.operation-clicked("+")
+                    }
+                }
+            }
+
+            Row {
+                Button {
+                    text: "C";
+                    clicked => {
+                        root.clear-clicked()
+                    }
+                }
+
+                Rectangle { } // Empty placeholders
+                Rectangle { }
+
+                Rectangle { }
+            }
+        }
     }
 }
